@@ -1,0 +1,23 @@
+
+.terminal {
+  background-color: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 10px;
+}
+
+.line {
+  margin-bottom: 10px;
+}
+
+.line-input {
+  color: #8be9fd;
+}
+
+.line-output {
+  color: #50fa7b;
+}
+

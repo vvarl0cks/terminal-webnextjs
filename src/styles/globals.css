@@ -1,0 +1,40 @@
+*{
+  margin: 0;
+}
+form {
+  display: flex;
+  align-items: center;
+}
+
+span {
+  color: #bd93f9;
+  margin-right: 10px;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  color: #d4d4d4;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+}
+
+input:focus {
+  border: none;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #1e1e1e;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #bd93f9;
+  border-radius: 10px;
+}
