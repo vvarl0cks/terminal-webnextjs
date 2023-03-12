@@ -14,11 +14,19 @@ export default function Home() {
     <>
       <Head>
         <title>Al Siam - Terminal Based Developer Portfolio</title>
-        <meta name="description" content="Welcome to Al Siam's developer portfolio! Explore Al's skills, projects, and background through this terminal-based portfolio. Try typing in commands like 'help', 'projects', 'about', and 'skills' to learn more about Al and the work as a developer" />
-        <meta name="keywords" content="HTML, CSS, JavaScript, TypeScript, Saif Al Siam, Al Siam, alsiam, " />
+        <meta
+          name="description"
+          content="Welcome to Al Siam's developer portfolio! Explore Al's skills, projects, and background through this terminal-based portfolio. Try typing in commands like 'help', 'projects', 'about', and 'skills' to learn more about Al and the work as a developer"
+        />
+        <meta
+          name="keywords"
+          content="HTML, CSS, JavaScript, TypeScript, Saif Al Siam, Al Siam, alsiam, "
+        />
         <meta name="author" content="Al Siam" />
       </Head>
-      <Terminal />
+      <main>
+        <Terminal />
+      </main>
     </>
   );
 }

@@ -5,7 +5,7 @@ type LineType = "input" | "output" | "clear";
 
 interface Line {
   type?: LineType;
-  message?: any ;
+  message?: any;
 }
 
 export default function Terminal() {
@@ -21,9 +21,10 @@ export default function Terminal() {
 
   useEffect(() => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.scrollIntoView();
+      inputRef.current.focus({ preventScroll: true });
     }
-  }, [lines]);
+  }, [input, lines]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -55,30 +56,32 @@ export default function Terminal() {
 
   return (
     <div className={styles.terminal} onClick={handleTerminalClick}>
-      {lines.map((line, index) => (
-        <div key={index} className={styles.line}>
-          <>
-            {line.type === "input" && (
-              <span className={styles.lineInput}>
-                alsiam@visitor:$ ~ {line.message}
-              </span>
-            )}
-            {line.type === "output" && (
-              <span className={styles.lineOutput}>{line.message}</span>
-            )}
-            {line.type === "clear" && setLines([])}
-          </>
-        </div>
-      ))}
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <span>alsiam@visitor:$&nbsp;~</span>
-        <input
-          type="text"
-          value={input}
-          onChange={handleInputChange}
-          ref={inputRef}
-        />
-      </form>
+      <div className={styles.wrap}>
+        {lines.map((line, index) => (
+          <div key={index} className={styles.line}>
+            <>
+              {line.type === "input" && (
+                <span className={styles.lineInput}>
+                  alsiam@visitor:$ ~ {line.message}
+                </span>
+              )}
+              {line.type === "output" && (
+                <span className={styles.lineOutput}>{line.message}</span>
+              )}
+              {line.type === "clear" && setLines([])}
+            </>
+          </div>
+        ))}
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <span>alsiam@visitor:$&nbsp;~</span>
+          <input
+            type="text"
+            value={input}
+            onChange={handleInputChange}
+            ref={inputRef}
+          />
+        </form>
+      </div>
     </div>
   );
 }
@@ -135,4 +138,3 @@ export const banner = `
                                                                    
 Type 'help' to see the list of available commands.
 `;
-
