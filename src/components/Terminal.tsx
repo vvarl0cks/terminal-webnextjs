@@ -5,78 +5,83 @@ type LineType = "input" | "output" | "clear";
 
 interface Line {
   type?: LineType;
-  message?: string;
+  message?: any ;
 }
 
 export default function Terminal() {
-    const [input, setInput] = useState<string>("");
-    const [lines, setLines] = useState<Line[]>([]);
-  
-    const inputRef = useRef<HTMLInputElement>(null);
-  
-    useEffect(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, [lines]);
-  
-    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setInput(event.target.value);
-    };
-  
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if (input.trim() !== "") {
-          const commandOutput: Line[] = handleCommand(input);
-          const newLines: Line[] = lines.concat([
-            { type: "input", message: input },
-            ...commandOutput,
-          ]);
-          setLines(newLines);
-          setInput("");
-        }
-      };
-  
-    const handleClear = () => {
-        setLines([]);
-      };
-  
-    const handleTerminalClick = () => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    };
-  
-    return (
-      <div className={styles.terminal} onClick={handleTerminalClick}>
-        {lines.map((line, index) => (
-          <div key={index} className={styles.line}>
-            <>
-              {line.type === "input" && (
-                <span className={styles.lineInput}>
-                  alsiam@visitor:$ ~ {line.message}
-                </span>
-              )}
-              {line.type === "output" && (
-                <span className={styles.lineOutput}>{line.message}</span>
-              )}
-              {line.type === "clear" && setLines([])}
-            </>
-          </div>
-        ))}
-        <form onSubmit={handleSubmit}>
-          <span>alsiam@visitor:$&nbsp;~</span>
-          <input
-            type="text"
-            value={input}
-            onChange={handleInputChange}
-            ref={inputRef}
-          />
-        </form>
-      </div>
-    );
-  }
-  
+  const [input, setInput] = useState<string>("");
+  const [lines, setLines] = useState<Line[]>([
+    {
+      type: "output",
+      message: banner,
+    },
+  ]);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [lines]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInput(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (input.trim() !== "") {
+      const commandOutput: Line[] = handleCommand(input);
+      const newLines: Line[] = lines.concat([
+        { type: "input", message: input },
+        ...commandOutput,
+      ]);
+      setLines(newLines);
+      setInput("");
+    }
+  };
+
+  const handleClear = () => {
+    setLines([]);
+  };
+
+  const handleTerminalClick = () => {
+    if (inputRef.current) {
+      inputRef.current.scrollIntoView();
+      inputRef.current.focus({ preventScroll: true });
+    }
+  };
+
+  return (
+    <div className={styles.terminal} onClick={handleTerminalClick}>
+      {lines.map((line, index) => (
+        <div key={index} className={styles.line}>
+          <>
+            {line.type === "input" && (
+              <span className={styles.lineInput}>
+                alsiam@visitor:$ ~ {line.message}
+              </span>
+            )}
+            {line.type === "output" && (
+              <span className={styles.lineOutput}>{line.message}</span>
+            )}
+            {line.type === "clear" && setLines([])}
+          </>
+        </div>
+      ))}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <span>alsiam@visitor:$&nbsp;~</span>
+        <input
+          type="text"
+          value={input}
+          onChange={handleInputChange}
+          ref={inputRef}
+        />
+      </form>
+    </div>
+  );
+}
 
 function handleCommand(input: string): Line[] {
   const [command, ...args] = input.split(" ");
@@ -117,3 +122,17 @@ function handleCommand(input: string): Line[] {
       return [{ type: "output", message: `Command not found: ${command}` }];
   }
 }
+
+export const banner = `
+  █████████   ████      █████████   ███                           
+  ███░░░░░███ ░░███     ███░░░░░███ ░░░                            
+ ░███    ░███  ░███    ░███    ░░░  ████   ██████   █████████████  
+ ░███████████  ░███    ░░█████████ ░░███  ░░░░░███ ░░███░░███░░███ 
+ ░███░░░░░███  ░███     ░░░░░░░░███ ░███   ███████  ░███ ░███ ░███ 
+ ░███    ░███  ░███     ███    ░███ ░███  ███░░███  ░███ ░███ ░███ 
+ █████   █████ █████   ░░█████████  █████░░████████ █████░███ █████
+░░░░░   ░░░░░ ░░░░░     ░░░░░░░░░  ░░░░░  ░░░░░░░░ ░░░░░ ░░░ ░░░░░ 
+                                                                   
+Type 'help' to see the list of available commands.
+`;
+

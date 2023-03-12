@@ -9,6 +9,7 @@ form {
 span {
   color: #bd93f9;
   margin-right: 10px;
+  white-space: pre-wrap;
 }
 
 input {
