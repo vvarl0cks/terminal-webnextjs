@@ -98,20 +98,20 @@ function handleCommand(input: string): Line[] {
       // Logic to retrieve and display list of projects
       return [
         { type: "output", message: "Projects:" },
-        { type: "output", message: "- Project 1" },
-        { type: "output", message: "- Project 2" },
-        { type: "output", message: "- Project 3" },
+        { type: "output", message: "- Al Folio" },
+        { type: "output", message: "- Web Projects" },
+        { type: "output", message: "- Al Siam" },
       ];
     case "about":
       // Logic to display information about the developer
-      return [{ type: "output", message: "About the developer" }];
+      return [{ type: "output", message: "I'm Al Siam" }];
     case "skills":
       // Logic to display list of skills
       return [
         { type: "output", message: "Skills:" },
-        { type: "output", message: "- Skill 1" },
-        { type: "output", message: "- Skill 2" },
-        { type: "output", message: "- Skill 3" },
+        { type: "output", message: "- React" },
+        { type: "output", message: "- Node" },
+        { type: "output", message: "- Typescript" },
       ];
     default:
       return [{ type: "output", message: `Command not found: ${command}` }];
