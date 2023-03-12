@@ -13,6 +13,9 @@ span {
   margin-right: 10px;
   white-space: pre-wrap;
 }
+a{
+  color: inherit;
+}
 
 input {
   background-color: transparent;
@@ -40,4 +43,11 @@ input:focus {
 ::-webkit-scrollbar-thumb {
   background-color: #bd93f9;
   border-radius: 10px;
+}
+
+.username{
+  color: cyan;
+}
+.visitor{
+  color: crimson;
 }

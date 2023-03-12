@@ -1,11 +1,15 @@
 import { useState, useRef, useEffect } from "react";
 import styles from "@/styles/Terminal.module.css";
+import { Alice } from "next/font/google";
+
+const font = Alice({ subsets: ["latin"], weight:["400"] });
 
 type LineType = "input" | "output" | "clear";
 
 interface Line {
   type?: LineType;
   message?: any;
+  link?: any;
 }
 
 export default function Terminal() {
@@ -42,11 +46,6 @@ export default function Terminal() {
       setInput("");
     }
   };
-
-  const handleClear = () => {
-    setLines([]);
-  };
-
   const handleTerminalClick = () => {
     if (inputRef.current) {
       inputRef.current.scrollIntoView();
@@ -61,19 +60,28 @@ export default function Terminal() {
           <div key={index} className={styles.line}>
             <>
               {line.type === "input" && (
-                <span className={styles.lineInput}>
-                  alsiam@visitor:$ ~ {line.message}
+                <span className={styles.lineInput && font.className}>
+                  <b className="username">alsiam@</b>
+                  <b className="visitor">visitor</b>:$ ~
                 </span>
               )}
-              {line.type === "output" && (
+              {line.type === "output" && line.link ? (
+                <a href={line.link} className={styles.lineOutput}>
+                  {line.message}
+                </a>
+              ) : (
                 <span className={styles.lineOutput}>{line.message}</span>
               )}
               {line.type === "clear" && setLines([])}
             </>
           </div>
         ))}
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <span>alsiam@visitor:$&nbsp;~</span>
+
+        <form onSubmit={handleSubmit} className={ styles.form}>
+          <span className={font.className}>
+            <b className="username">alsiam@</b>
+            <b className="visitor">visitor</b>:$&nbsp;~
+          </span>
           <input
             type="text"
             value={input}
@@ -97,18 +105,26 @@ function handleCommand(input: string): Line[] {
     case "help":
       return [
         { type: "output", message: "Available commands:" },
-        { type: "output", message: "- help" },
-        { type: "output", message: "- projects" },
         { type: "output", message: "- about" },
+        { type: "output", message: "- projects" },
         { type: "output", message: "- skills" },
+        { type: "output", message: "[ clear - clean the terminal] " },
       ];
     case "projects":
       // Logic to retrieve and display list of projects
       return [
         { type: "output", message: "Projects:" },
-        { type: "output", message: "- Al Folio" },
-        { type: "output", message: "- Web Projects" },
-        { type: "output", message: "- Al Siam" },
+        { type: "output", message: "- Al Siam", link: "https://alsiam.com" },
+        {
+          type: "output",
+          message: "- Web Projects",
+          link: "https://alsiam.github.io/web-projects",
+        },
+        {
+          type: "output",
+          message: "- Al Folio",
+          link: "https://alsiam.github.io/al-folio",
+        },
       ];
     case "about":
       // Logic to display information about the developer
@@ -117,9 +133,20 @@ function handleCommand(input: string): Line[] {
       // Logic to display list of skills
       return [
         { type: "output", message: "Skills:" },
-        { type: "output", message: "- React" },
-        { type: "output", message: "- Node" },
+        { type: "output", message: "- HTML5" },
+        { type: "output", message: "- CSS3" },
+        { type: "output", message: "- Tailwind CSS" },
+        { type: "output", message: "- Sass" },
+        { type: "output", message: "- JavaScript" },
         { type: "output", message: "- Typescript" },
+        { type: "output", message: "- React" },
+        { type: "output", message: "- Redux" },
+        { type: "output", message: "- NextJS" },
+        { type: "output", message: "- NodeJS" },
+        { type: "output", message: "- ExpressJS" },
+        { type: "output", message: "- MongoDB" },
+        { type: "output", message: "- Material UI" },
+        { type: "output", message: "- Ant Design" },
       ];
     default:
       return [{ type: "output", message: `Command not found: ${command}` }];
